@@ -7,6 +7,8 @@ import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classicedi
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline'
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar'
 import Table from '@ckeditor/ckeditor5-table/src/table'
+import {TableProperties} from "@ckeditor/ckeditor5-table";
+import {TableCellProperties} from "@ckeditor/ckeditor5-table";
 
 // Block Elements
 import AutoFormat from '@ckeditor/ckeditor5-autoformat/src/autoformat'
@@ -120,6 +122,8 @@ export default class CkEditor extends ClassicEditorBase {
             MediaEmbed,
             Table,
             TableToolbar,
+            TableProperties,
+            TableCellProperties,
             HtmlEmbed,
             SourceEditing,
             Indent,

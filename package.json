@@ -32,7 +32,7 @@
         "@ckeditor/ckeditor5-paste-from-office": "^38.1.0",
         "@ckeditor/ckeditor5-remove-format": "^38.1.0",
         "@ckeditor/ckeditor5-source-editing": "^38.1.0",
-        "@ckeditor/ckeditor5-table": "^38.1.0",
+        "@ckeditor/ckeditor5-table": "^38.1.1",
         "@ckeditor/ckeditor5-theme-lark": "^38.1.0",
         "@ckeditor/ckeditor5-ui": "^38.1.0",
         "@vue/compiler-sfc": "^3.3.4",

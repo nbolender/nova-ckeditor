@@ -7,6 +7,17 @@ export default {
             'tableRow',
             'tableColumn',
             'mergeTableCells',
+            'tableProperties',
+            'tableCellProperties',
         ],
+        tableProperties: {
+            // Configuration of the TableProperties plugin.
+            // ...
+        },
+
+        tableCellProperties: {
+            // Configuration of the TableCellProperties plugin.
+            // ...
+        },
     }
 }
