@@ -400,6 +400,7 @@ export default {
 
         &.v-lazy-image-loaded {
             width: 100%;
+            object-fit: contain;
             opacity: 1;
         }
     }
