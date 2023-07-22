@@ -67,7 +67,7 @@ class ImageStorage
     {
         $attributes = $this->resize($file);
 
-        $file->storePubliclyAs('', $attributes['file'], [
+        $file->storeAs('', $attributes['file'], [
             'disk' => $this->disk
         ]);
 
