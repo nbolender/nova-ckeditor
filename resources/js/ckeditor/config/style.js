@@ -8,12 +8,12 @@ export default {
             {
                 name: 'Button',
                 element: 'a',
-                classes: ['btn-primary'],
+                classes: ['btn', 'btn-primary'],
             },
             {
                 name: 'Secondary Button',
                 element: 'a',
-                classes: ['btn-secondary'],
+                classes: ['btn', 'btn-secondary'],
             },
         ],
     },
