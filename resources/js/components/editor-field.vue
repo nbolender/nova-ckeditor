@@ -77,6 +77,7 @@ export default {
                     items: this.currentField.toolbar,
                     shouldNotGroupWhenFull: this.currentField.shouldNotGroupWhenFull
                 },
+                style: CkEditor.defaultConfig.style,
                 ...toolbarOptions
             }
 
