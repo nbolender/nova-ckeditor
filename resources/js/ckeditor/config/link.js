@@ -5,6 +5,8 @@
  */
 export default {
     link: {
+        addTargetToExternalLinks: true,
+        defaultProtocol: 'https://',
         decorators: {
             isTargetBlank: {
                 mode: 'manual',

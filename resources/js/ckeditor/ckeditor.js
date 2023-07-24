@@ -36,6 +36,7 @@ import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic'
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold'
 import Link from '@ckeditor/ckeditor5-link/src/link'
+import Style from '@ckeditor/ckeditor5-style'
 
 // Images and Media
 import Image from '@ckeditor/ckeditor5-image/src/image'
@@ -73,6 +74,7 @@ export default class CkEditor extends ClassicEditorBase {
         return {
             licenseKey: '',
             ...require('./config/link').default,
+            ...require('./config/style').default,
             ...require('./config/image').default,
             ...require('./config/media').default,
             ...require('./config/table').default,
@@ -93,6 +95,7 @@ export default class CkEditor extends ClassicEditorBase {
             Essentials,
             Font,
             Link,
+            Style,
             List,
             Heading,
             TextPartLanguage,

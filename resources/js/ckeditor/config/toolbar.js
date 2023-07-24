@@ -1,6 +1,7 @@
 export default {
     toolbar: {
         items: [
+            'style',
             'heading',
             'horizontalLine',
             '|',
