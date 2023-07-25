@@ -244,6 +244,21 @@ export default {
 
             this.isUploading = true
 
+            const files = [...dataTransfer.files]
+            for (const i in files) {
+                const file = files[i]
+                if ([
+                    'image/jpg',
+                    'image/jpeg',
+                    'image/gif',
+                    'image/png',
+                ].indexOf(file.type) === -1) {
+                    Nova.error("Image must be JPG, PNG, or GIF.")
+                    this.isUploading = false
+                    return;
+                }
+            }
+
             const uploads = []
             const requests = ([...dataTransfer.files]).map(file => {
                 const data = {}
