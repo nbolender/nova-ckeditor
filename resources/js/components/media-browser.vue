@@ -78,7 +78,7 @@
 
             <div v-else-if="items.length" ref="scrollable" @scroll="onScroll" @dragover.prevent="" @drop.prevent="handleUploads" class="h-full w-full overflow-y-scroll">
                 <div class="flex flex-row flex-wrap justify-center content-center mb-12 mt-6 px-6">
-                    <div v-for="item in items" :key="item.hash" @click="select(item)" class="media-container text-center p-1 cursor-pointer flex flex-col" :title="item.name" :class="{'w-1/6': isImagePicker, 'w-1/5': isVideoPicker}">
+                    <div v-for="item in items" :key="item.hash" @click="select(item)" @dblclick="doubleClick(item)" class="media-container text-center p-1 cursor-pointer flex flex-col" :title="item.name" :class="{'w-1/6': isImagePicker, 'w-1/5': isVideoPicker}">
                         <v-lazy-image
                             v-if="isImagePicker"
                             class="image-preview rounded shadow bg-white self-center mx-auto"
@@ -104,9 +104,16 @@
 
         <template #footer>
             <div class="flex p-2">
-                <div>
+                <div class="flex w-full">
+                    <input v-if="isImagePicker" id="fileUpload" multiple type="file" hidden accept="image/jpeg,image/jpg,image/gif,image/png" @change="handleFilePicker">
+                    <input v-else="isImagePicker" id="fileUpload" multiple type="file" hidden accept="video/*" @change="handleFilePicker">
+                    <button @click.prevent="openFilePicker" :disabled="isUploading" class="bg h-9 shadow bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded inline-flex items-center justify-center px-3 shadow relative mr-auto">
+                        <span v-if="isImagePicker">Upload Image</span>
+                        <span v-else>Upload Video</span>
+                    </button>
+
                     <button @click.prevent="insert" :disabled="!selected.length" class="bg h-9 shadow bg-primary-500 hover:bg-primary-400 text-white dark:text-gray-900 cursor-pointer rounded inline-flex items-center justify-center px-3 shadow relative">
-                        <span v-if="selected.length < 2">{{ __(isImagePicker ? 'Choose Image' : 'Choose Video') }}</span>
+                        <span v-if="selected.length < 2">{{ __(isImagePicker ? 'Insert Image' : 'Insert Video') }}</span>
                         <span v-else-if="isImagePicker">{{ __('Insert :count Images', {count: selected.length}) }}</span>
                         <span v-else>{{ __('Insert :count Videos', {count: selected.length}) }}</span>
                     </button>
@@ -232,6 +239,16 @@ export default {
                 })
         },
 
+        handleFilePicker(e) {
+            const files = e.target.files;
+
+            this.handleUploads({
+                dataTransfer: {
+                    files,
+                }
+            });
+        },
+
         /**
          * Handle Dropped File Uploads
          *
@@ -247,15 +264,20 @@ export default {
             const files = [...dataTransfer.files]
             for (const i in files) {
                 const file = files[i]
-                if ([
-                    'image/jpg',
-                    'image/jpeg',
-                    'image/gif',
-                    'image/png',
-                ].indexOf(file.type) === -1) {
-                    Nova.error("Image must be JPG, PNG, or GIF.")
-                    this.isUploading = false
-                    return;
+
+                if (this.isImagePicker) {
+                    if ([
+                        'image/jpg',
+                        'image/jpeg',
+                        'image/gif',
+                        'image/png',
+                    ].indexOf(file.type) === -1) {
+                        Nova.error("Image must be JPG, PNG, or GIF.")
+                        this.isUploading = false
+                        return;
+                    }
+                } else {
+                    // TODO
                 }
             }
 
@@ -283,7 +305,7 @@ export default {
                                 file: item.name
                             }))
 
-                            uploads.push(item)
+                            uploads.push(item.file)
                         }
                     })
             })
@@ -292,7 +314,7 @@ export default {
                 .then(() => this.fetch(1))
                 .then(() => {
                     this.items
-                        .filter((item) => uploads.includes(item))
+                        .filter((item) => uploads.includes(item.file))
                         .forEach(this.select.bind(this))
                 })
                 .finally(() => {
@@ -327,6 +349,17 @@ export default {
             else {
                 this.selected = [item]
             }
+        },
+
+        doubleClick(item) {
+            setTimeout(() => {
+                this.select(item);
+                this.insert();
+            }, 100);
+        },
+
+        openFilePicker() {
+            document.getElementById("fileUpload").click()
         },
 
         /**
