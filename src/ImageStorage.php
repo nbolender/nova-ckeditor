@@ -166,11 +166,15 @@ class ImageStorage
     {
         $image = Image::make($file->getRealPath());
 
-        if ($image->width() > $maxWidth || $image->height() > $maxHeight) {
-            $image->resize($maxWidth, $maxHeight, function(Constraint $constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+        $config = config('nova-ckeditor');
+
+        if ($config['resize_images']) {
+            if ($image->width() > $maxWidth || $image->height() > $maxHeight) {
+                $image->resize($maxWidth, $maxHeight, function (Constraint $constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+            }
         }
 
         return $image;
@@ -185,7 +189,11 @@ class ImageStorage
      */
     public function optimize(string $tempPath): int
     {
-        ImageOptimizer::optimize($tempPath);
+        $config = config('nova-ckeditor');
+
+        if ($config['optimize_images']) {
+            ImageOptimizer::optimize($tempPath);
+        }
 
         return filesize($tempPath);
     }

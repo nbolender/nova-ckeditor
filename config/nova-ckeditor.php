@@ -35,6 +35,8 @@ return [
      |
      */
 
+    'optimize_images' => true,
+    'resize_images' => true,
     'max-quality' => 75,
 
     /*
