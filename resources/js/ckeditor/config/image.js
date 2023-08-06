@@ -34,6 +34,7 @@ export default {
             }
         ],
         toolbar: [
+            'linkImage',
             'imageBrowser',
             '|',
             'imageStyle:full',
